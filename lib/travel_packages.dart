@@ -94,8 +94,9 @@ class _TravelPackagesState extends State<TravelPackages> {
                             borderRadius: const BorderRadius.vertical(
                               top: Radius.circular(20),
                             ),
-                            child: Image.file(
-                              File(tour.imagePath ?? " "),
+                            child: Image.network(
+                              tour.imagePath ??
+                                  '', // Replace `imagePath` with your URL field
                               fit: BoxFit.cover,
                             ),
                           ),

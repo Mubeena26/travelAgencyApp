@@ -67,3 +67,21 @@ class FirestoreServices {
     }
   }
 }
+
+Future<void> _saveImageUrlToFirebase(String imageUrl) async {
+  try {
+    // Reference to the Firestore collection where you want to save the data
+    CollectionReference toursCollection =
+        FirebaseFirestore.instance.collection('tours');
+
+    // Assuming 'tourId' is the ID of the tour you're adding
+    await toursCollection.add({
+      'imagePath': imageUrl, // Save the image URL here
+      'otherField': 'value', // You can also save other fields here
+    });
+
+    print('Image URL saved to Firebase!');
+  } catch (e) {
+    print('Failed to save image URL to Firebase: $e');
+  }
+}

@@ -29,10 +29,10 @@ class TourDetailPage extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.file(
-                    File(tour.imagePath ?? " "),
-                    fit: BoxFit.cover,
-                  ),
+                  // child: Image.file(
+                  //   File(tour.imagePath ?? " "),
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
               ),
               const SizedBox(height: 16),
