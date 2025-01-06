@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:admin_project/bloc/tour_bloc.dart';
@@ -45,11 +46,13 @@ class _TravelPackagesState extends State<TravelPackages> {
             );
           } else if (state is TourLoaded) {
             final tours = state.tours;
+            log(state.tours[0].imagePath.toString());
+            log(state.tours[1].packageName.toString());
 
             if (tours.isEmpty) {
               return const Center(child: Text('No packages available.'));
             }
-
+// ivide printavunind nan kanika athede verne print?? adh deails add cheydhitambo wait image avanila
             return GridView.builder(
               padding: const EdgeInsets.all(10),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -61,6 +64,11 @@ class _TravelPackagesState extends State<TravelPackages> {
               itemCount: tours.length,
               itemBuilder: (context, index) {
                 final tour = tours[index];
+
+                // Safely extract the first image URL if it exists
+
+                // Log the first image URL to the console
+                log('Image URL for tour at index $index: ${tour.imagePath}');
 
                 return Container(
                     decoration: BoxDecoration(
@@ -94,11 +102,20 @@ class _TravelPackagesState extends State<TravelPackages> {
                             borderRadius: const BorderRadius.vertical(
                               top: Radius.circular(20),
                             ),
-                            child: Image.network(
-                              tour.imagePath ??
-                                  '', // Replace `imagePath` with your URL field
-                              fit: BoxFit.cover,
-                            ),
+                            child: tour.imagePath != null
+                                ? Image.network(
+                                    tour.imagePath!.first,
+                                    fit: BoxFit.cover,
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    },
+                                  )
+                                : const Center(
+                                    child: Icon(Icons.image, size: 50),
+                                  ), // Fallback if no image is available
                           ),
                         ),
                       ),

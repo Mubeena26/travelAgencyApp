@@ -43,6 +43,10 @@ class _AddTourState extends State<AddTour> {
       TextEditingController();
   final TextEditingController _mealsController = TextEditingController();
   final TextEditingController _inclusionsController = TextEditingController();
+  final TextEditingController _startDate = TextEditingController();
+  final TextEditingController _endDate = TextEditingController();
+  final TextEditingController _adultPer = TextEditingController();
+  final TextEditingController _childper = TextEditingController();
   final TextEditingController _exclusionsController = TextEditingController();
   final TextEditingController _itineraryController = TextEditingController();
   final TextEditingController _cancellationPolicyController =
@@ -52,68 +56,46 @@ class _AddTourState extends State<AddTour> {
   final TextEditingController _availabilityController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  File? _selectedImage;
-  String? _imageUrl;
+  List<File> _selectedImages = [];
 
   Future<void> _pickImage(ImageSource source) async {
     final ImagePicker _picker = ImagePicker();
 
-    final XFile? pickedFile =
-        await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
+    final List<XFile>? pickedFiles = await _picker.pickMultiImage();
+    if (pickedFiles != null && pickedFiles.isNotEmpty) {
       setState(() {
-        _selectedImage = File(pickedFile.path);
+        _selectedImages = pickedFiles.map((file) => File(file.path)).toList();
       });
     } else {
-      print('No image selected.');
+      print('No images selected.');
     }
   }
 
-  Future<String?> _uploadImage() async {
+  Future<List<String>?> _uploadImages() async {
+    final List<String> imageUrls = [];
     final url = Uri.parse('https://api.cloudinary.com/v1_1/dbgvn6kup/upload');
-    final request = http.MultipartRequest('POST', url)
-      ..fields['upload_preset'] = 'my_upload_preset'
-      ..files
-          .add(await http.MultipartFile.fromPath('file', _selectedImage!.path));
 
-    final response = await request.send();
-    if (response.statusCode == 200) {
-      final responseData = await response.stream.toBytes();
-      final responseString = String.fromCharCodes(responseData);
-      final jsonMap = jsonDecode(responseString);
+    for (var selectedImage in _selectedImages) {
+      final request = http.MultipartRequest('POST', url)
+        ..fields['upload_preset'] = 'my_upload_preset'
+        ..files
+            .add(await http.MultipartFile.fromPath('file', selectedImage.path));
 
-      final imageUrl = jsonMap['url'];
-      // setState(() {
-      //   // Save the URL to Firebase Firestore
-      //   _saveImageUrlToFirebase(imageUrl);
-      // });
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        final responseData = await response.stream.toBytes();
+        final responseString = String.fromCharCodes(responseData);
+        final jsonMap = jsonDecode(responseString);
+        final imageUrl = jsonMap['url'];
 
-      // Return the image URL here
-      return imageUrl;
-      // This is the public URL of the uploaded image
-    } else {
-      print('Image upload failed');
-      return null; // In case of failure, return null or handle the error
+        imageUrls.add(imageUrl);
+      } else {
+        print('Image upload failed');
+      }
     }
+
+    return imageUrls.isNotEmpty ? imageUrls : null;
   }
-
-  // Future<void> _saveImageUrlToFirebase(String imageUrl) async {
-  //   try {
-  //     // Reference to the Firestore collection where you want to save the data
-  //     CollectionReference toursCollection =
-  //         FirebaseFirestore.instance.collection('tours');
-
-  //     // Assuming 'tourId' is the ID of the tour you're adding
-  //     await toursCollection.add({
-  //       'imagePath': imageUrl, // Save the image URL here
-  //       'otherField': 'value', // You can also save other fields here
-  //     });
-
-  //     print('Image URL saved to Firebase!');
-  //   } catch (e) {
-  //     print('Failed to save image URL to Firebase: $e');
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -130,22 +112,32 @@ class _AddTourState extends State<AddTour> {
               children: [
                 GestureDetector(
                   onTap: () => _pickImage(ImageSource.gallery),
-                  child: _selectedImage != null
-                      ? Image.file(
-                          _selectedImage!,
-                          height: 150,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                  child: _selectedImages.isNotEmpty
+                      ? Container(
+                          height:
+                              200, // Set a fixed height for the grid view container
+                          child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3, // Adjust as needed
+                              crossAxisSpacing: 4,
+                              mainAxisSpacing: 4,
+                            ),
+                            itemCount: _selectedImages.length,
+                            itemBuilder: (context, index) {
+                              return Image.file(
+                                _selectedImages[index],
+                                height: 150,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              );
+                            },
+                          ),
                         )
                       : Container(
-                          height: 150,
-                          width: double.infinity,
-                          color: Colors.grey[200],
-                          child: const Icon(
-                            Icons.add_a_photo,
-                            size: 50,
-                            color: Colors.grey,
-                          ),
+                          height: 200, // Empty space if no images are selected
+                          color: Colors.grey[300],
+                          child: Center(child: Text('No images selected')),
                         ),
                 ),
                 const SizedBox(height: 16),
@@ -204,6 +196,34 @@ class _AddTourState extends State<AddTour> {
                 ),
                 const SizedBox(height: 16),
                 FormContainer(
+                  controller: _startDate,
+                  hintText: 'Enter start date',
+                  labelText: 'Start date',
+                  border: const OutlineInputBorder(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter start date.';
+                    }
+
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                FormContainer(
+                  controller: _endDate,
+                  hintText: 'Enter end date',
+                  labelText: 'end date',
+                  border: const OutlineInputBorder(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter end date.';
+                    }
+
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                FormContainer(
                   controller: _durationController,
                   hintText: 'Enter duration (in days)',
                   labelText: 'Duration',
@@ -211,6 +231,34 @@ class _AddTourState extends State<AddTour> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your duration.';
+                    }
+
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                FormContainer(
+                  controller: _adultPer,
+                  hintText: 'Enter adult price',
+                  labelText: 'adult Price',
+                  border: const OutlineInputBorder(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter adult price.';
+                    }
+
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                FormContainer(
+                  controller: _childper,
+                  hintText: 'Enter child price',
+                  labelText: 'child price',
+                  border: const OutlineInputBorder(),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your child price.';
                     }
 
                     return null;
@@ -402,13 +450,13 @@ class _AddTourState extends State<AddTour> {
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      // Upload image and get the URL if an image is selected
-                      String? imageUrl;
-                      if (_selectedImage != null) {
-                        imageUrl = await _uploadImage();
+                      // Upload images and get the URLs
+                      List<String>? imageUrls;
+                      if (_selectedImages.isNotEmpty) {
+                        imageUrls = await _uploadImages();
                       }
 
-                      if (_selectedImage != null && imageUrl == null) {
+                      if (_selectedImages.isNotEmpty && imageUrls == null) {
                         // Show error message if image upload failed
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -423,6 +471,8 @@ class _AddTourState extends State<AddTour> {
                       final newTour = Tour(
                         id: UniqueKey().toString(),
                         packageName: _packageNameController.text.trim(),
+                        adultper: _adultPer.text.trim(),
+                        childper: _childper.text.trim(),
                         packageType: _selectedPackageType ?? '',
                         destination: _destinationController.text.trim(),
                         duration: int.parse(_durationController.text.trim()),
@@ -446,12 +496,19 @@ class _AddTourState extends State<AddTour> {
                         cancellationPolicy:
                             _cancellationPolicyController.text.trim(),
                         termsConditions: _termsConditionsController.text.trim(),
-                        startDate: DateTime.now(),
-                        endDate: DateTime.now().add(const Duration(days: 7)),
+                        startDate: DateTime(DateTime.now().year,
+                                DateTime.now().month, DateTime.now().day)
+                            .toIso8601String()
+                            .split('T')[0],
+                        endDate: DateTime(DateTime.now().year,
+                                DateTime.now().month, DateTime.now().day + 7)
+                            .toIso8601String()
+                            .split('T')[0],
+
                         availability:
                             int.parse(_availabilityController.text.trim()),
                         isPublished: true,
-                        imagePath: imageUrl, // The uploaded image URL
+                        imagePath: imageUrls, // Store the list of image URLs
                       );
 
                       // Example usage: Add to Firebase Firestore

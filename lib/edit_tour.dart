@@ -89,8 +89,8 @@ class _EditTourState extends State<EditTour> {
     _cancellationPolicyController.text = widget.tour.cancellationPolicy;
     _termsConditionsController.text = widget.tour.termsConditions;
     _availabilityController.text = widget.tour.availability.toString();
-    _selectedImage =
-        widget.tour.imagePath != null ? File(widget.tour.imagePath!) : null;
+    // _selectedImage =
+    //     widget.tour.imagePath != null ? File(widget.tour.imagePath!) : null;
   }
 
   @override
@@ -294,7 +294,7 @@ class _EditTourState extends State<EditTour> {
                         termsConditions: _termsConditionsController.text.trim(),
                         availability:
                             int.parse(_availabilityController.text.trim()),
-                        imagePath: _selectedImage?.path,
+                        imagePath: [],
                       );
                       context.read<TourBloc>().add(
                             UpdateTour(tour: updatedTour),

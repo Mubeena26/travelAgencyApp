@@ -1,4 +1,8 @@
+import 'package:admin_project/booking.dart';
+import 'package:admin_project/chat/chat_list.dart';
+import 'package:admin_project/chat/chat_screen.dart';
 import 'package:admin_project/travel_packages.dart';
+import 'package:admin_project/users_list.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {
@@ -20,9 +24,13 @@ class Menu extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.input),
-            title: Text('Welcome'),
-            onTap: () => {},
+            leading: Icon(Icons.list),
+            title: Text('Users list'),
+            onTap: () => {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => UsersList(),
+              ))
+            },
           ),
           ListTile(
               leading: Icon(Icons.travel_explore),
@@ -33,20 +41,28 @@ class Menu extends StatelessWidget {
                     ))
                   }),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-            onTap: () => {Navigator.of(context).pop()},
+            leading: Icon(Icons.chat),
+            title: Text('Chat'),
+            onTap: () => {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => ChatLitsshow(),
+              ))
+            },
           ),
           ListTile(
-            leading: Icon(Icons.border_color),
-            title: Text('Feedback'),
-            onTap: () => {Navigator.of(context).pop()},
+            leading: Icon(Icons.list_alt_rounded),
+            title: Text('Bookings'),
+            onTap: () => {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => Booking(),
+              ))
+            },
           ),
-          ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Logout'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.exit_to_app),
+          //   title: Text('Logout'),
+          //   onTap: () => {Navigator.of(context).pop()},
+          // ),
         ],
       ),
     );

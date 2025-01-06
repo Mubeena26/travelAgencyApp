@@ -17,37 +17,40 @@ class Tour {
   List<Map<String, String>> itinerary;
   String cancellationPolicy;
   String termsConditions;
-  DateTime startDate;
-  DateTime endDate;
+  String startDate; // Store as string
+  String endDate; // Store as string
   int availability;
   bool isPublished;
-  String? imagePath;
+  String adultper;
+  String childper;
+  List<String>? imagePath;
 
-  Tour({
-    required this.id,
-    required this.packageName,
-    required this.packageType,
-    required this.destination,
-    required this.duration,
-    required this.price,
-    required this.activities,
-    required this.accommodationType,
-    required this.starRating,
-    required this.transportationMode,
-    required this.arrivalTime,
-    required this.departureTime,
-    required this.meals,
-    required this.inclusions,
-    required this.exclusions,
-    required this.itinerary,
-    required this.cancellationPolicy,
-    required this.termsConditions,
-    required this.startDate,
-    required this.endDate,
-    required this.availability,
-    required this.isPublished,
-    required this.imagePath,
-  });
+  Tour(
+      {required this.id,
+      required this.packageName,
+      required this.packageType,
+      required this.destination,
+      required this.duration,
+      required this.price,
+      required this.activities,
+      required this.accommodationType,
+      required this.starRating,
+      required this.transportationMode,
+      required this.arrivalTime,
+      required this.departureTime,
+      required this.meals,
+      required this.inclusions,
+      required this.exclusions,
+      required this.itinerary,
+      required this.cancellationPolicy,
+      required this.termsConditions,
+      required this.startDate, // Pass as string
+      required this.endDate, // Pass as string
+      required this.availability,
+      required this.isPublished,
+      required this.imagePath,
+      required this.adultper,
+      required this.childper});
 
   // Serialize for Firestore
   Map<String, dynamic> toMap() {
@@ -70,11 +73,13 @@ class Tour {
       'itinerary': itinerary,
       'cancellationPolicy': cancellationPolicy,
       'termsConditions': termsConditions,
-      'startDate': startDate.toIso8601String(),
-      'endDate': endDate.toIso8601String(),
+      'startDate': startDate, // Store startDate as a string
+      'endDate': endDate, // Store endDate as a string
       'availability': availability,
       'isPublished': isPublished,
       'imagePath': imagePath,
+      'adultPer': adultper,
+      'childPer': childper,
     };
   }
 
@@ -85,6 +90,8 @@ class Tour {
       packageName: map['packageName'] ?? '',
       packageType: map['packageType'] ?? '',
       destination: map['destination'] ?? '',
+      adultper: map['adultPer'] ?? '',
+      childper: map['childPer'] ?? '',
       duration: map['duration'] ?? 0,
       price: map['price'] ?? 0.0,
       activities: List<String>.from(map['activities'] ?? []),
@@ -99,22 +106,14 @@ class Tour {
       itinerary: List<Map<String, String>>.from(map['itinerary'] ?? []),
       cancellationPolicy: map['cancellationPolicy'] ?? '',
       termsConditions: map['termsConditions'] ?? '',
-      startDate:
-          DateTime.parse(map['startDate'] ?? DateTime.now().toIso8601String()),
-      endDate:
-          DateTime.parse(map['endDate'] ?? DateTime.now().toIso8601String()),
+      startDate: map['startDate'] ?? '', // Parse startDate as string
+      endDate: map['endDate'] ?? '', // Parse endDate as string
       availability: map['availability'] ?? 0,
       isPublished: map['isPublished'] ?? false,
-      imagePath: map['imagePath'] is String
-          ? map['imagePath']
-          : (map['imagePath'] is List && map['imagePath'].isNotEmpty
-              ? map['imagePath']
-                  [0] // You can choose the first image path or adjust as needed
-              : ''),
+      imagePath: List<String>.from(map['imagePath'] ?? []),
     );
   }
 
-  // Full copyWith method
   Tour copyWith({
     String? id,
     String? packageName,
@@ -134,17 +133,21 @@ class Tour {
     List<Map<String, String>>? itinerary,
     String? cancellationPolicy,
     String? termsConditions,
-    DateTime? startDate,
-    DateTime? endDate,
+    String? startDate, // Changed to string
+    String? endDate, // Changed to string
     int? availability,
     bool? isPublished,
-    String? imagePath,
+    String? adultPer,
+    String? childPer,
+    List<String>? imagePath,
   }) {
     return Tour(
       id: id ?? this.id,
       packageName: packageName ?? this.packageName,
       packageType: packageType ?? this.packageType,
       destination: destination ?? this.destination,
+      adultper: adultper,
+      childper: childper,
       duration: duration ?? this.duration,
       price: price ?? this.price,
       activities: activities ?? this.activities,

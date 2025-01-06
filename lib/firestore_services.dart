@@ -68,7 +68,7 @@ class FirestoreServices {
   }
 }
 
-Future<void> _saveImageUrlToFirebase(String imageUrl) async {
+Future<void> _saveImageUrlToFirebase(List<String> imageUrl) async {
   try {
     // Reference to the Firestore collection where you want to save the data
     CollectionReference toursCollection =
