@@ -1,4 +1,4 @@
-import 'package:admin_project/chat/chat_bubble.dart';
+import 'package:admin_project/features/chat/components/chat_bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:admin_project/bloc/tour_bloc.dart';
-import 'package:admin_project/form_container.dart';
-import 'package:admin_project/models.dart';
+import 'package:admin_project/features/bloc/tour_bloc.dart';
+import 'package:admin_project/features/core/theme/colors.dart';
+import 'package:admin_project/features/tour/widgts/form_container.dart';
+import 'package:admin_project/features/tour/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -136,7 +137,7 @@ class _AddTourState extends State<AddTour> {
                         )
                       : Container(
                           height: 200, // Empty space if no images are selected
-                          color: Colors.grey[300],
+                          color: grey,
                           child: Center(child: Text('No images selected')),
                         ),
                 ),
@@ -172,7 +173,7 @@ class _AddTourState extends State<AddTour> {
                       labelText: 'Package Type',
                       border: OutlineInputBorder(),
                       filled: true,
-                      fillColor: Colors.white),
+                      fillColor: whitecolor),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please select a package type.';
@@ -496,12 +497,10 @@ class _AddTourState extends State<AddTour> {
                         cancellationPolicy:
                             _cancellationPolicyController.text.trim(),
                         termsConditions: _termsConditionsController.text.trim(),
-                        startDate: DateTime(DateTime.now().year,
-                                DateTime.now().month, DateTime.now().day)
+                        startDate: DateTime.parse(_startDate.text)
                             .toIso8601String()
                             .split('T')[0],
-                        endDate: DateTime(DateTime.now().year,
-                                DateTime.now().month, DateTime.now().day + 7)
+                        endDate: DateTime.parse(_endDate.text)
                             .toIso8601String()
                             .split('T')[0],
 

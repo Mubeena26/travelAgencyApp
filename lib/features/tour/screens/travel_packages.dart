@@ -1,13 +1,15 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:admin_project/bloc/tour_bloc.dart';
-import 'package:admin_project/edit_tour.dart';
-import 'package:admin_project/tour_detail_page.dart';
+import 'package:admin_project/features/bloc/tour_bloc.dart';
+import 'package:admin_project/features/core/theme/colors.dart';
+import 'package:admin_project/features/tour/screens/tour_detail_page.dart';
+import 'package:admin_project/features/tour/components/edit_tour.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'add_tour.dart';
+import '../components/add_tour.dart';
 
 class TravelPackages extends StatefulWidget {
   const TravelPackages({super.key});
@@ -31,7 +33,7 @@ class _TravelPackagesState extends State<TravelPackages> {
         title: const Text('Travel Packages'),
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF98C1E2)),
+          icon: const Icon(Icons.arrow_back, color: bluetheme),
         ),
       ),
       body: BlocBuilder<TourBloc, TourState>(
@@ -73,7 +75,7 @@ class _TravelPackagesState extends State<TravelPackages> {
                 return Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
+                      color: whitecolor,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.2),
@@ -134,7 +136,7 @@ class _TravelPackagesState extends State<TravelPackages> {
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 66, 88, 132),
+                                      color: lightPrimary,
                                     ),
                                     maxLines:
                                         1, // Limit to 1 line to avoid excessive text
@@ -145,7 +147,7 @@ class _TravelPackagesState extends State<TravelPackages> {
                                     tour.destination,
                                     style: const TextStyle(
                                       fontSize: 12,
-                                      color: Color.fromARGB(255, 66, 88, 132),
+                                      color: lightPrimary,
                                     ),
                                   ),
                                 ],
@@ -198,7 +200,7 @@ class _TravelPackagesState extends State<TravelPackages> {
                               IconButton(
                                 icon: const Icon(
                                   Icons.edit,
-                                  color: Colors.black,
+                                  color: blackcolor,
                                   size: 20,
                                 ),
                                 onPressed: () {

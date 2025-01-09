@@ -1,5 +1,5 @@
-import 'package:admin_project/firestore_services.dart';
-import 'package:admin_project/models.dart';
+import 'package:admin_project/features/tour/services/firestore_services.dart';
+import 'package:admin_project/features/tour/models/models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';

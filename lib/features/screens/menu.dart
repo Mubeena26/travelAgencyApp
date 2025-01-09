@@ -1,8 +1,9 @@
-import 'package:admin_project/booking.dart';
-import 'package:admin_project/chat/chat_list.dart';
-import 'package:admin_project/chat/chat_screen.dart';
-import 'package:admin_project/travel_packages.dart';
-import 'package:admin_project/users_list.dart';
+import 'package:admin_project/features/bookings/screens/booking.dart';
+import 'package:admin_project/features/chat/screens/chat_list.dart';
+import 'package:admin_project/features/chat/screens/chat_screen.dart';
+import 'package:admin_project/features/core/theme/colors.dart';
+import 'package:admin_project/features/tour/screens/travel_packages.dart';
+import 'package:admin_project/features/screens/users_list.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {
@@ -17,10 +18,10 @@ class Menu extends StatelessWidget {
           DrawerHeader(
             child: Text(
               'Dashboard',
-              style: TextStyle(color: Colors.white, fontSize: 25),
+              style: TextStyle(color: whitecolor, fontSize: 25),
             ),
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 152, 190, 221),
+              color: homebg,
             ),
           ),
           ListTile(

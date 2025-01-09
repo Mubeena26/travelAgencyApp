@@ -1,3 +1,4 @@
+import 'package:admin_project/features/core/theme/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -9,21 +10,15 @@ class BookingDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 188, 213, 226),
-      appBar: AppBar(
-        title: const Text('Booking Details'),
-        backgroundColor: const Color.fromARGB(255, 157, 216, 226),
-      ),
+      backgroundColor: board2,
+      appBar:
+          AppBar(title: const Text('Booking Details'), backgroundColor: board2),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              const Color.fromARGB(255, 157, 216, 226),
-              Color.fromARGB(255, 204, 217, 223),
-              Color.fromARGB(255, 121, 136, 143),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            colors: [board2, board1, board3],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
         ),
         child: Padding(
@@ -61,7 +56,7 @@ class BookingDetail extends StatelessWidget {
                 const Center(
                   child: Text(
                     'No images available',
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(color: grey),
                   ),
                 ),
               const SizedBox(height: 20), // Space before details section
@@ -72,11 +67,7 @@ class BookingDetail extends StatelessWidget {
                 width: 400,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        const Color.fromARGB(255, 157, 216, 226),
-                        Color.fromARGB(255, 204, 217, 223),
-                        Color.fromARGB(255, 121, 136, 143),
-                      ],
+                      colors: [board2, board1, board3],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),

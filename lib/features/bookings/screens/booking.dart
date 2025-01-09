@@ -1,3 +1,4 @@
+import 'package:admin_project/features/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'booking_detail.dart'; // Import the BookingDetail screen
@@ -8,19 +9,12 @@ class Booking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bookings'),
-        backgroundColor: const Color.fromARGB(255, 114, 174, 206),
-      ),
+      appBar: AppBar(title: const Text('Bookings'), backgroundColor: board1),
       body: Container(
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              const Color.fromARGB(255, 114, 174, 206),
-              const Color.fromARGB(255, 172, 180, 184),
-              const Color.fromARGB(255, 94, 115, 126)
-            ],
+            colors: [board1, board3, board3],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -61,17 +55,14 @@ class Booking extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [
-                          const Color.fromARGB(255, 43, 48, 51),
-                          const Color.fromARGB(255, 49, 80, 105)
-                        ],
+                        colors: [gradient1, gradient3],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
+                          color: grey.withOpacity(0.2),
                           spreadRadius: 3,
                           blurRadius: 5,
                           offset: const Offset(0, 3),
@@ -93,7 +84,7 @@ class Booking extends StatelessWidget {
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) => Icon(
                               Icons.broken_image,
-                              color: Colors.grey.shade400,
+                              color: grey,
                               size: 80,
                             ),
                           ),
@@ -109,13 +100,13 @@ class Booking extends StatelessWidget {
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
-                                    color: Colors.white),
+                                    color: lightPrimary),
                               ),
                               const SizedBox(height: 4),
                               Text(
                                 'Total Price: \$${booking['totalPrice']}',
                                 style: TextStyle(
-                                  color: Colors.green.shade700,
+                                  color: green,
                                   fontSize: 14,
                                 ),
                               ),

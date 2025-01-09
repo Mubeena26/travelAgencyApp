@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:admin_project/models.dart';
+import 'package:admin_project/features/core/theme/colors.dart';
+import 'package:admin_project/features/tour/models/models.dart';
 import 'package:flutter/material.dart';
 
 class TourDetailPage extends StatelessWidget {
@@ -25,7 +26,7 @@ class TourDetailPage extends StatelessWidget {
                 height: 250,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Colors.grey[200],
+                  color: grey,
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),

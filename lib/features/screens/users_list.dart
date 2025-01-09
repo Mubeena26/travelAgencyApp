@@ -1,3 +1,4 @@
+import 'package:admin_project/features/core/theme/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,9 @@ class UsersList extends StatelessWidget {
     final usersRef = FirebaseFirestore.instance.collection('users');
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 198, 206, 212),
+      backgroundColor: homebg,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 198, 206, 212),
+        backgroundColor: homebg,
         title: const Text('Users List'),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -42,13 +43,9 @@ class UsersList extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   gradient: const LinearGradient(
-                    colors: [
-                      Color.fromARGB(255, 121, 209, 224),
-                      Color.fromARGB(255, 204, 217, 223),
-                      Color.fromARGB(255, 121, 136, 143),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+                    colors: [board1, board2, board3],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
                   ),
                 ),
                 child: Card(
@@ -68,8 +65,8 @@ class UsersList extends StatelessWidget {
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors
-                                .white, // Text color to contrast the gradient
+                            color:
+                                whitecolor, // Text color to contrast the gradient
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -77,7 +74,7 @@ class UsersList extends StatelessWidget {
                           'Email: ${user['email']}',
                           style: const TextStyle(
                             fontSize: 16,
-                            color: Colors.white70,
+                            color: white70,
                           ),
                         ),
                         const SizedBox(height: 8),

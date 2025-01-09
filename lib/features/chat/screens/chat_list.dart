@@ -1,4 +1,5 @@
-import 'package:admin_project/chat/chat_screen.dart';
+import 'package:admin_project/features/chat/screens/chat_screen.dart';
+import 'package:admin_project/features/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -17,14 +18,14 @@ class _ChatLitsshowState extends State<ChatLitsshow> {
       appBar: AppBar(
         leading: const Icon(
           Icons.chat,
-          color: Colors.black,
+          color: blackcolor,
         ),
         automaticallyImplyLeading: false,
-        backgroundColor: const Color.fromARGB(255, 176, 217, 233),
+        backgroundColor: gradient1,
         title: Text(
           'CHATS',
           style: TextStyle(
-            color: Colors.black,
+            color: blackcolor,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -32,11 +33,7 @@ class _ChatLitsshowState extends State<ChatLitsshow> {
       body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                const Color.fromARGB(255, 176, 217, 233),
-                const Color.fromARGB(255, 219, 243, 255),
-                const Color.fromARGB(255, 115, 173, 204)
-              ],
+              colors: [gradient1, gradient2, gradient3],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -93,24 +90,24 @@ class _ChatLitsshowState extends State<ChatLitsshow> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 4.0),
                   child: Card(
-                    color: const Color.fromARGB(255, 41, 182, 246),
+                    color: bluetheme2,
                     elevation: 5,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: ListTile(
                       leading: const CircleAvatar(
-                        backgroundColor: Colors.black,
+                        backgroundColor: lightPrimary,
                         child: Icon(
                           Icons.person,
-                          color: Colors.white,
+                          color: whitecolor,
                         ),
                       ),
                       title: Text(
                         data['senderemail'],
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: lightPrimary,
                         ),
                       ),
                       subtitle: Text(
@@ -118,7 +115,7 @@ class _ChatLitsshowState extends State<ChatLitsshow> {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: const TextStyle(
-                          color: Colors.black,
+                          color: lightPrimary,
                         ),
                       ),
                       trailing: Column(

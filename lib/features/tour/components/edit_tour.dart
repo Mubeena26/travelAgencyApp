@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:admin_project/bloc/tour_bloc.dart';
-import 'package:admin_project/form_container.dart';
+import 'package:admin_project/features/bloc/tour_bloc.dart';
+import 'package:admin_project/features/tour/widgts/form_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:admin_project/models.dart';
+import 'package:admin_project/features/tour/models/models.dart';
 
 class EditTour extends StatefulWidget {
   final Tour tour; // Pass the Tour object to edit

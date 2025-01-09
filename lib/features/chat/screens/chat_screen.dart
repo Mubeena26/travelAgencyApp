@@ -1,8 +1,10 @@
 // ignore_for_file: avoid_print
 
+import 'package:admin_project/features/core/theme/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class ChatScreenn extends StatefulWidget {
   final String chatroomId;
@@ -51,7 +53,7 @@ class _ChatScreennState extends State<ChatScreenn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 176, 217, 233),
+      backgroundColor: home,
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
@@ -59,16 +61,16 @@ class _ChatScreennState extends State<ChatScreenn> {
             },
             icon: const Icon(
               Icons.arrow_back_ios,
-              color: Colors.black,
+              color: lightPrimary,
             )),
-        backgroundColor: const Color.fromARGB(255, 176, 217, 233),
+        backgroundColor: home,
         toolbarHeight: 80,
         titleSpacing: 20,
         automaticallyImplyLeading: false,
         title: Text(
           widget.senderemail,
           style:
-              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              const TextStyle(color: lightPrimary, fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(
@@ -117,7 +119,7 @@ class _ChatScreennState extends State<ChatScreenn> {
               decoration: InputDecoration(
                   prefixIcon: const Icon(
                     Icons.message,
-                    color: Colors.black,
+                    color: blackcolor,
                     size: 30,
                   ),
                   hintText: 'Type a message.....',
@@ -127,19 +129,19 @@ class _ChatScreennState extends State<ChatScreenn> {
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0),
                     borderSide: const BorderSide(
-                      color: Colors.black,
+                      color: blackcolor,
                       width: 2.0,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0),
                     borderSide: const BorderSide(
-                      color: Colors.black,
+                      color: blackcolor,
                       width: 2.0,
                     ),
                   ),
                   suffixIcon: IconButton(
-                    color: Colors.black,
+                    color: blackcolor,
                     iconSize: 35,
                     icon: const Icon(Icons.send),
                     onPressed: () {
@@ -172,7 +174,7 @@ class _ChatScreennState extends State<ChatScreenn> {
           'This message was deleted',
           style: TextStyle(
             fontStyle: FontStyle.italic,
-            color: Colors.grey[400],
+            color: grey,
           ),
         ),
       );
@@ -185,14 +187,14 @@ class _ChatScreennState extends State<ChatScreenn> {
         return await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            backgroundColor: Colors.black,
+            backgroundColor: blackcolor,
             title: const Text(
               'Delete Message',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: blackcolor),
             ),
             content: const Text(
               'Are you sure you want to delete this message?',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: blackcolor),
             ),
             actions: [
               TextButton(
@@ -201,7 +203,7 @@ class _ChatScreennState extends State<ChatScreenn> {
                 },
                 child: const Text(
                   'Cancel',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: blackcolor),
                 ),
               ),
               TextButton(
@@ -220,12 +222,12 @@ class _ChatScreennState extends State<ChatScreenn> {
           if (value) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                  backgroundColor: Colors.black,
+                  backgroundColor: blackcolor,
                   content: Center(
                       child: Text(
                     'Message deleted',
                     style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
+                        color: blackcolor, fontWeight: FontWeight.bold),
                   ))),
             );
           }
@@ -342,7 +344,7 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DateTime date = timestamp.toDate();
-    // String formattedDate = DateFormat('dd MMM yyyy, hh:mm a').format(date);
+    String formattedDate = DateFormat('dd MMM yyyy, hh:mm a').format(date);
 
     return Container(
       margin: isSentByMe
@@ -352,18 +354,12 @@ class ChatBubble extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: isSentByMe
             ? LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 38, 60, 70),
-                  Color.fromARGB(255, 84, 149, 255),
-                ],
+                colors: [chatgradient, chatgradient2],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               )
             : LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 4, 174, 247),
-                  Color.fromARGB(255, 84, 149, 255),
-                ],
+                colors: [button1, button2],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -394,17 +390,17 @@ class ChatBubble extends StatelessWidget {
             message,
             style: TextStyle(
               fontSize: 18,
-              color: isSentByMe ? Colors.white : Colors.white,
+              color: isSentByMe ? whitecolor : whitecolor,
             ),
           ),
           const SizedBox(height: 5),
-          // Text(
-          //   formattedDate,
-          //   style: TextStyle(
-          //     fontSize: 12,
-          //     color: isSentByMe ? Colors.white70 : Colors.white70,
-          //   ),
-          // ),
+          Text(
+            formattedDate,
+            style: TextStyle(
+              fontSize: 12,
+              color: isSentByMe ? whitecolor : whitecolor,
+            ),
+          ),
         ],
       ),
     );
